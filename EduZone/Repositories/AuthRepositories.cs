@@ -10,38 +10,24 @@ namespace EduZone.Repositories
 {
     public class AuthRepositories
     {
-        private readonly string _connectionString;
-
-        public AuthRepositories(string connectionString)
+        public void RegisterUser(RegisterModel register)
         {
-            _connectionString = _connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
-        }
+            // Create a DbConnection instance with the connection string
+            DbConnection dbConnection = new DbConnection();
 
-        public IEnumerable<Product> GetProducts()
-        {
-            var products = new List<Product>();
+            // Prepare the SQL query
+            string query = "INSERT INTO [Table] (Name, Password, Email) VALUES (@Name, @Password, @Email)";
 
-            using (var connection = new SqlConnection(_connectionString))
+            // Set up parameters for the query
+            var parameters = new SqlParameter[]
             {
-                connection.Open();
-                var query = "SELECT Id, Name, Price FROM Products";
+                new SqlParameter("@Email", register.Email),
+                new SqlParameter("@Password", register.Password),
+                new SqlParameter("@Name", register.Name)
+            };
 
-                using (var command = new SqlCommand(query, connection))
-                using (var reader = command.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        products.Add(new Product
-                        {
-                            Id = (int)reader["Id"],
-                            Name = reader["Name"].ToString(),
-                            Price = (decimal)reader["Price"]
-                        });
-                    }
-                }
-            }
-
-            return products;
+            // Execute the query
+            dbConnection.ExecuteInsertQuery(query, parameters);
         }
     }
 }
