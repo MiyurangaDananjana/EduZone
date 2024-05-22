@@ -13,5 +13,10 @@ namespace EduZone.Controllers
         {
             return View();
         }
+
+        public ActionResult PostBlog()
+        {
+            return View();
+        }
     }
 }
