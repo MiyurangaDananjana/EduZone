@@ -3,7 +3,7 @@
 /* Set padding to keep content from hitting the edges */
 
 body {
-    background: linear-gradient(90deg, #e3ffe7 0%, #dce1ea 100%)
+    background: linear-gradient(90deg, #e3ffe7 0%, #dce1ea 100%);
 }
 
 .body-content {

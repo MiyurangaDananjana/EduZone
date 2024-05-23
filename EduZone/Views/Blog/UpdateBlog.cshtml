@@ -1,16 +1,36 @@
 ﻿@model EduZone.Models.BlogModel
+
 @{
-    ViewBag.Title = "PostBlog";
+    ViewBag.Title = "UpdateBlog";
 }
 
-
 <style>
-    #descriptionCounter{
+    #descriptionCounter {
         font-size: 12px;
         color: #6c757d;
     }
+
+    .image-preview-container {
+        text-align: center;
+        margin-top: 10px;
+    }
+
     #imagePreview {
         border: 1px solid black;
+        max-width: 100%;
+        width: 200px;
+        height: 150px;
+        border-radius: 15px;
+        object-fit: cover;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .image-name {
+        margin-top: 10px;
+        text-align: center;
+        color: #6c757d;
     }
 </style>
 
@@ -19,9 +39,9 @@
     <div class="container" style="margin-bottom:2rem;">
         <div class="row justify-content-center">
             <div class="col-md-4">
-                @using (Html.BeginForm("PostBlog", "Blog", FormMethod.Post, new { enctype = "multipart/form-data", @class = "login-form" }))
+                @using (Html.BeginForm("UpdateBlog", "Blog", FormMethod.Post, new { enctype = "multipart/form-data", @class = "login-form" }))
                 {
-                    <p id="title" class="text-center">New Story</p>
+                    <p id="title" class="text-center">Edit Story</p>
                     if (ViewBag.Message != null)
                     {
                         <div class="alert alert-success" style="color: #748544;" role="alert">@ViewBag.Message</div>
@@ -41,9 +61,12 @@
                         @Html.Label("ImageUpload", "Upload Image", new { @class = "control-label" })
                         <input type="file" name="ImageUpload" accept="image/*" class="form-control" onchange="previewImage(event)" />
                         @Html.ValidationMessage("ImageUpload", "", new { @class = "validation-message" })
-                        <div class="image-preview-container" style="text-align: center; margin-top: 10px;">
-                            <img id="imagePreview" src="#" alt="Image Preview" style="display: none; max-width: 100%; width: 150px; height: 150px; border-radius: 15px; margin-left:100px; object-fit: cover;" />
+                        <div class="image-preview-container">
+                            <img id="imagePreview" src="~/Content/blog_img/@Model.ImgName" alt="Image Preview" />
                         </div>
+                        <div class="image-name" id="imageName">@Model.ImgName</div>
+                        <!-- Hidden field to hold the existing image name -->
+                        <input type="hidden" name="ExistingImgName" value="@Model.ImgName" />
                     </div>
                     <div class="form-group" style="margin-top:10px;">
                         <button type="submit" class="btn btn-warning btn-block" style=" border: 1px solid #3b3b3b; width:100%; margin-top:20px;">
@@ -81,6 +104,10 @@
                 var img = document.getElementById('imagePreview');
                 img.src = reader.result;
                 img.style.display = 'block';
+
+                // Display the file name
+                var imageName = document.getElementById('imageName');
+                imageName.textContent = input.files[0].name;
             }
 
             if (input.files && input.files[0]) {

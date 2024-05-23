@@ -1,23 +1,26 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Data;
-using System.Linq;
-using System.Web;
 
 namespace EduZone.Repositories
 {
     public class DbConnection
     {
         // Hardcoded connection string
-        private string connectionString = "Data Source=HQ-IT-PC36\\SQLEXPRESS;Initial Catalog=EduZone;Integrated Security=True;Encrypt=False";
+        private string connectionString = "Data Source=MiYuranga;Initial Catalog=EduZone;Integrated Security=True;Encrypt=False";
 
-        public DataTable ExecuteQuery(string sqlQuery)
+        public DataTable ExecuteQuery(string sqlQuery, SqlParameter[] parameters = null)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
                 SqlCommand command = new SqlCommand(sqlQuery, connection);
+
+                if (parameters != null)
+                {
+                    command.Parameters.AddRange(parameters);
+                }
+
                 DataTable dataTable = new DataTable();
                 dataTable.Load(command.ExecuteReader());
                 return dataTable;
@@ -45,5 +48,21 @@ namespace EduZone.Repositories
             ExecuteInsertQuery(sqlQuery, parameters);
         }
 
+        public bool CheckConnection()
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    connection.Close();
+                    return true;
+                }
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
     }
 }
