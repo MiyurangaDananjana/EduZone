@@ -1,0 +1,63 @@
+﻿<style>
+    #sidebar {
+        width: 200px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100%;
+        background-color: rgb(33, 37, 41);
+        color: #fff;
+        padding-top: 20px;
+    }
+
+    .sidebar-header {
+        text-align: center;
+        padding: 20px 0;
+        font-size: 1.5em;
+        font-weight: bold;
+    }
+
+        .sidebar-header .navbar-brand {
+            color: #fff;
+            text-decoration: none;
+        }
+
+            .sidebar-header .navbar-brand:hover {
+                text-decoration: none;
+            }
+
+    #sidebar ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
+        #sidebar ul li {
+            padding: 10px;
+            text-align: center;
+        }
+
+            #sidebar ul li a {
+                color: #fff;
+                text-decoration: none;
+                padding:0 20px 0 20px;
+                width:50px;
+            }
+
+            #sidebar ul li:hover {
+                background-color: #575757;
+                border: 1px solid #ffc107;
+                border-radius:15px;
+            }
+</style>
+<div id="sidebar">
+    <div class="sidebar-header">
+        @Html.ActionLink("EduZone", "AdminDashboard", "Dashboard", new { area = "" }, new { @class = "navbar-brand" })
+    </div>
+    <ul>
+        <li><a href="@Url.Action("AdminDashboard", "Dashboard")">Home</a></li>
+        <li><a href="@Url.Action("Users", "Dashboard")">Users</a></li>
+        <li><a href="@Url.Action("Stories", "Dashboard")">Stories</a></li>
+        <!-- Add more links as needed -->
+    </ul>
+</div>
+

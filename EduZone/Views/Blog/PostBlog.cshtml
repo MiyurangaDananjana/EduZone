@@ -1,0 +1,91 @@
+﻿@model EduZone.Models.BlogModel
+@{
+    ViewBag.Title = "PostBlog";
+}
+
+
+<style>
+    #descriptionCounter{
+        font-size: 12px;
+        color: #6c757d;
+    }
+    #imagePreview {
+        border: 1px solid black;
+    }
+</style>
+
+<main>
+    @Html.AntiForgeryToken()
+    <div class="container" style="margin-bottom:2rem;">
+        <div class="row justify-content-center">
+            <div class="col-md-4">
+                @using (Html.BeginForm("PostBlog", "Blog", FormMethod.Post, new { enctype = "multipart/form-data", @class = "login-form" }))
+                {
+                    <p id="title" class="text-center">New Story</p>
+                    if (ViewBag.Message != null)
+                    {
+                        <div class="alert alert-success" style="color: #748544;" role="alert">@ViewBag.Message</div>
+                    }
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Title, "Title", new { @class = "control-label" })
+                        @Html.TextBoxFor(model => model.Title, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Title, "", new { @class = "validation-message" })
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Description, "Description", new { @class = "control-label" })
+                        @Html.TextAreaFor(model => model.Description, new { @class = "form-control", placeholder = "Tell your story...", rows = 5 })
+                        <small id="descriptionCounter" class="form-text text-muted">0 / 5000 characters</small>
+                        @Html.ValidationMessageFor(model => model.Description, "", new { @class = "validation-message" })
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("ImageUpload", "Upload Image", new { @class = "control-label" })
+                        <input type="file" name="ImageUpload" accept="image/*" class="form-control" onchange="previewImage(event)" />
+                        @Html.ValidationMessage("ImageUpload", "", new { @class = "validation-message" })
+                        <div class="image-preview-container" style="text-align: center; margin-top: 10px;">
+                            <img id="imagePreview" src="#" alt="Image Preview" style="display: none; max-width: 100%; width: 150px; height: 150px; border-radius: 15px; margin-left:100px; object-fit: cover;" />
+                        </div>
+                    </div>
+                    <div class="form-group" style="margin-top:10px;">
+                        <button type="submit" class="btn btn-warning btn-block" style=" border: 1px solid #3b3b3b; width:100%; margin-top:20px;">
+                            <span class="glyphicon glyphicon-floppy-disk"></span> Publish
+                        </button>
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+</main>
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var textArea = document.querySelector('textarea[name="Description"]');
+            var counter = document.getElementById('descriptionCounter');
+            var maxCharacters = 5000;
+
+            textArea.addEventListener('input', function () {
+                var currentLength = textArea.value.length;
+                counter.textContent = currentLength + " / " + maxCharacters + " characters";
+            });
+
+            var initialLength = textArea.value.length;
+            counter.textContent = initialLength + " / " + maxCharacters + " characters";
+        });
+
+        function previewImage(event) {
+            var input = event.target;
+            var reader = new FileReader();
+
+            reader.onload = function () {
+                var img = document.getElementById('imagePreview');
+                img.src = reader.result;
+                img.style.display = 'block';
+            }
+
+            if (input.files && input.files[0]) {
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    </script>
+}

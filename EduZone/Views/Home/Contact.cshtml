@@ -1,19 +1,29 @@
 ﻿@{
     ViewBag.Title = "Contact";
 }
-<main aria-labelledby="title">
-    <h2 id="title">@ViewBag.Title.</h2>
-    <h3>@ViewBag.Message</h3>
+
+<style>
+    #contact-page{
+        padding:50px;
+        background-color: #f1f1f1;
+        border: 1px solid black;
+        border-radius: 15px;
+        margin-top: 50px;
+
+    }
+</style>
+
+<main id="contact-page" aria-labelledby="title">
+    <h2 id="title">@ViewBag.Message .</h2>
 
     <address>
         One Microsoft Way<br />
         Redmond, WA 98052-6399<br />
-        <abbr title="Phone">P:</abbr>
-        425.555.0100
+        <abbr title="Phone">Phone Number:</abbr>
+       <strong> +94 76 878 85 56 </strong>
     </address>
 
     <address>
-        <strong>Support:</strong>   <a href="mailto:Support@example.com">Support@example.com</a><br />
-        <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
+        <strong>Support:</strong>   <a href="mailto:support@eduzone.lk">support@eduzone.com</a><br />
     </address>
 </main>

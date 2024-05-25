@@ -6,30 +6,69 @@
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    <link href="~/Content/Site.css" rel="stylesheet" />
 </head>
 <body>
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark">
         <div class="container">
-            @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            @if (Session["UserId"] == null)
+            {
+                @Html.ActionLink("EduZone", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            }
+            else if (Session["Role"] != null && Session["Role"].ToString() == "1")
+            {
+                @Html.ActionLink("EduZone", "AdminDashboard", "Dashboard", new { area = "" }, new { @class = "navbar-brand" })
+
+            }
+            else
+            {
+                @Html.ActionLink("EduZone", "BlogView", "Blog", new { area = "" }, new { @class = "navbar-brand" })
+            }
+
             <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Toggle navigation" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
                 <ul class="navbar-nav flex-grow-1">
-                    <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                    @if (Session["UserId"] == null)
+                    {
+                        <li>@Html.ActionLink("Login", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                    }
                     <li>@Html.ActionLink("About", "About", "Home", new { area = "" }, new { @class = "nav-link" })</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+
+                    @if (Session["UserId"] != null)
+                    {
+                        <li>@Html.ActionLink("Write", "PostBlog", "Blog", new { area = "" }, new { @class = "nav-link" })</li>
+
+                        <li>@Html.ActionLink("Stories", "BlogView", "Blog", new { area = "" }, new { @class = "nav-link" })</li>
+                    }
+                    @if (Session["Role"] != null && Session["Role"].ToString() == "1")
+                    {
+                        <li>@Html.ActionLink("Dashboard", "AdminDashboard", "Dashboard", new { area = "" }, new { @class = "nav-link" })</li>
+                    }
                 </ul>
+                <div class="d-flex align-items-center">
+                    <!-- User Profile Section -->
+                    @if (Session["firstName"] != null)
+                    {
+                        <img src="~/Content/user_profile/@Session["Profile"].ToString()" alt="Profile Photo" class="rounded-circle" width="30" height="30">
+                        <span class="navbar-text ms-2">@Session["firstName"].ToString()</span>
+                        <ul class="navbar-nav flex-grow-1">
+                            <li>@Html.ActionLink("Logout", "Logout", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                        </ul>
+                    }
+                </div>
             </div>
         </div>
     </nav>
     <div class="container body-content">
         @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
+        @*<hr />*@
+        @*<footer>
+                <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            </footer>*@
     </div>
 
     @Scripts.Render("~/bundles/jquery")
