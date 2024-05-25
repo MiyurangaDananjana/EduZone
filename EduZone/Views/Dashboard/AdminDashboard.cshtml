@@ -1,7 +1,37 @@
-﻿
+﻿@model EduZone.Models.DashboardModel
 @{
     ViewBag.Title = "AdminDashboard";
+    @Html.Partial("_Sidebar")
 }
 
-<h2>AdminDashboard</h2>
+<style>
+    .card {
+        border: 1px solid #ffc107;
+    }
+</style>
+<div class="container">
+    <!-- Include Sidebar -->
+    <!-- Main Content -->
+    <div id="main-content" style="margin-left: 220px; padding: 20px;">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Total Users</h5>
+                        <p class="card-text">@Model.UserCount </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Total Blogs</h5>
+                        <p class="card-text">@Model.BlogsCount </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Your main content goes here -->
+    </div>
+</div>
 

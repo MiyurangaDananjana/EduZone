@@ -30,9 +30,15 @@ namespace EduZone.Controllers
                 return View(login);
             }
             AuthRepositories authRepositories = new AuthRepositories(); 
-            RegisterModel register =  authRepositories.GetUserByEmailAndPassword(login.Email, login.Password);
 
-            if(register.UserId  > 0)
+            RegisterModel register =  authRepositories.GetUserByEmailAndPassword(login.Email, login.Password);
+         
+            if (register == null)
+            {
+                ViewBag.Message = "Email or Password is Incorrect.";
+                return View(login);
+            }
+            if (register.UserId  > 0)
             {
                 Session["UserId"] = register.UserId;
                 Session["firstName"] = register.FirstName;
@@ -111,11 +117,55 @@ namespace EduZone.Controllers
         public ActionResult Logout()
         {
             Session.Clear();
-
             return RedirectToAction("Index");
         }
 
+        public ActionResult DeleteUser(int Id)
+        {
+            AuthRepositories authRepositories = new AuthRepositories();
+            authRepositories.DeleteUser(Id);
+            return RedirectToAction("Users", "Dashboard");
+        }
 
+
+        public ActionResult UpdateUser( int Id)
+        {
+            AuthRepositories authRepo = new AuthRepositories();
+            RegisterModel user = authRepo.GetUserById(Id);
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+            return View(user);
+        }
+
+        [HttpPost]
+        public ActionResult UpdateUser(RegisterModel model, HttpPostedFileBase ImageUpload)
+        {
+            if (model.UserId > 0)
+            {
+                AuthRepositories authRepo = new AuthRepositories();
+
+                if (ImageUpload != null && ImageUpload.ContentLength > 0)
+                {
+                    string fileName = Path.GetFileName(ImageUpload.FileName);
+                    string path = Path.Combine(Server.MapPath("~/Content/blog_img"), fileName);
+                    ImageUpload.SaveAs(path);
+                    model.ProfilePath = fileName;
+                }
+
+                bool isUpdated = authRepo.UpdateUser(model);
+                if (isUpdated)
+                {
+                    ViewBag.Message = "User updated successfully!";
+                }
+                else
+                {
+                    ViewBag.ErrorMessage = "Error updating user.";
+                }
+            }
+            return View(model);
+        }
 
     }
 }

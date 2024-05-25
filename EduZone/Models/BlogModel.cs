@@ -15,6 +15,8 @@ namespace EduZone.Models
 
         public int CreateBy { get; set; }
 
+        public string CreateUser { get; set; }
+
         public DateTime CreateDate { get; set; }
 
         public int Status { get; set; }

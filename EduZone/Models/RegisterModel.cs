@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace EduZone.Models
@@ -33,5 +34,7 @@ namespace EduZone.Models
         public string RePassword { get; set; }
 
         public DateTime CreateDateTime { get; set; }
+
+        public List<RegisterModel> registerModels { get; set; }
     }
 }
