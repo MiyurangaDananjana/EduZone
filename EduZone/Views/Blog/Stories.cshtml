@@ -104,11 +104,12 @@
             padding: 0;
         }
     }
-</style>
-<body>
-
-    <div class="row">
-      
+</style><body>
+    <div class="container">
+        <div class="search-bar">
+            <input type="text" id="searchInput" class="form-control" placeholder="Search by title or description" oninput="searchPosts()" />
+        </div>
+        <div class="row">
             @foreach (var item in Model.Blogs)
             {
                 <div class="card" style="margin-bottom:15px;">
@@ -118,11 +119,25 @@
                         <img src="~/Content/blog_img/@item.ImgName" alt="Blog Image">
                     </div>
                     <p>@item.Description</p>
-
                 </div>
             }
-
-        
+        </div>
     </div>
-</body>
+    <script>
+        function searchPosts() {
+            var input = document.getElementById("searchInput").value.toLowerCase();
+            var cards = document.getElementsByClassName("card");
 
+            for (var i = 0; i < cards.length; i++) {
+                var title = cards[i].getElementsByTagName("h2")[0].innerText.toLowerCase();
+                var description = cards[i].getElementsByTagName("p")[0].innerText.toLowerCase();
+
+                if (title.includes(input) || description.includes(input)) {
+                    cards[i].style.display = "";
+                } else {
+                    cards[i].style.display = "none";
+                }
+            }
+        }
+    </script>
+</body>
