@@ -9,6 +9,17 @@ namespace EduZone.Controllers
 {
     public class BlogController : Controller
     {
+
+        public ActionResult Stories()
+        {
+            BlogModel model = new BlogModel();
+            BlogRepositories blogRepositories = new BlogRepositories();
+
+ 
+
+            model.Blogs = blogRepositories.GetAllBlogPosts();
+            return View(model);
+        }
         // GET: BlogView
         public ActionResult BlogView()
         {

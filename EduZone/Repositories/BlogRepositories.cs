@@ -154,5 +154,34 @@ namespace EduZone.Repositories
 
             dbConnection.ExecuteUpdateQuery(query, parameters);
         }
+
+        internal List<BlogModel> GetAllBlogPosts()
+        {
+            List<BlogModel> blogPosts = new List<BlogModel>();
+            DbConnection dbConnection = new DbConnection();
+
+            // Updated query to remove the WHERE clause
+            string query = "SELECT [POST_ID], [TITLE], [CONTENT], [STATUS], [CREATEDATETIME], [CREATE_BY], [IMG] FROM [POST]";
+
+            // Execute the query without any parameters
+            var dataTable = dbConnection.ExecuteQuery(query);
+
+            foreach (DataRow row in dataTable.Rows)
+            {
+                BlogModel blogPost = new BlogModel
+                {
+                    Id = Convert.ToInt32(row["POST_ID"]),
+                    Title = row["TITLE"].ToString(),
+                    Description = row["CONTENT"].ToString(),
+                    Status = Convert.ToInt32(row["STATUS"]),
+                    CreateDate = Convert.ToDateTime(row["CREATEDATETIME"]),
+                    CreateBy = Convert.ToInt32(row["CREATE_BY"]),
+                    ImgName = row["IMG"].ToString()
+                };
+                blogPosts.Add(blogPost);
+            }
+
+            return blogPosts;
+        }
     }
 }
