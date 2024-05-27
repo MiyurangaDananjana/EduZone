@@ -105,13 +105,14 @@ namespace EduZone.Controllers
 
                 BlogModel blogEdit = new BlogModel
                 {
+                    Id = blog.Id,
                     Title = blog.Title,
                     Description = blog.Description,
                     ImgName = imageName ?? "default.png"
                 };
                 BlogRepositories blogRepository = new BlogRepositories();
                 blogRepository.UpdateBlog(blogEdit); 
-                return RedirectToAction("Index"); 
+                return RedirectToAction("BlogView"); 
             }
             return View(blog); 
         }

@@ -7,7 +7,7 @@ namespace EduZone.Repositories
     public class DbConnection
     {
         // Hardcoded connection string
-        private string connectionString = "Data Source=MiYuranga;Initial Catalog=EduZone;Integrated Security=True;Encrypt=False";
+        private string connectionString = "Data Source=HQ-IT-PC36\\SQLEXPRESS;Initial Catalog=EduZone;Integrated Security=True;Encrypt=False";
 
         public DataTable ExecuteQuery(string sqlQuery, SqlParameter[] parameters = null)
         {
