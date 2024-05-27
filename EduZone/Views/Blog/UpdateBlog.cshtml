@@ -46,6 +46,7 @@
                     {
                         <div class="alert alert-success" style="color: #748544;" role="alert">@ViewBag.Message</div>
                     }
+                    @Html.HiddenFor(model => model.Id)
                     <div class="form-group">
                         @Html.LabelFor(model => model.Title, "Title", new { @class = "control-label" })
                         @Html.TextBoxFor(model => model.Title, new { @class = "form-control" })

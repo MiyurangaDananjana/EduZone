@@ -147,6 +147,7 @@ namespace EduZone.Repositories
 
             var parameters = new SqlParameter[]
             {
+                new SqlParameter("@id", blog.Id),
                 new SqlParameter("@title", blog.Title),
                 new SqlParameter("@content", blog.Description),
                 new SqlParameter("@img", blog.ImgName),
