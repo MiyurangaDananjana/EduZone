@@ -1,0 +1,120 @@
+﻿@model EduZone.Models.RegisterModel
+
+@{
+    ViewBag.Title = "Update User";
+}
+
+<style>
+    .image-preview-container {
+        text-align: center;
+        margin-top: 10px;
+    }
+
+    #imagePreview {
+        border: 1px solid black;
+        max-width: 100%;
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        object-fit: cover;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .image-name {
+        margin-top: 10px;
+        text-align: center;
+        color: #6c757d;
+    }
+</style>
+
+<div class="container" style="margin-bottom:2rem;">
+    <div class="row justify-content-center">
+        <div class="col-md-4">
+            @using (Html.BeginForm("UpdateUser", "Home", FormMethod.Post, new { enctype = "multipart/form-data", @class = "reg-form", style = "max-width: 400px;" }))
+            {
+                <p id="title" class="text-center">Update User</p>
+                if (ViewBag.Message != null)
+                {
+                    <div class="alert alert-success" style="color: #748544;" role="alert">@ViewBag.Message</div>
+                }
+                if (ViewBag.ErrorMessage != null)
+                {
+                    <div class="alert alert-danger" role="alert">@ViewBag.ErrorMessage</div>
+                }
+                @Html.HiddenFor(model => model.UserId)
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Email, "Email", new { @class = "control-label" })
+                    @Html.TextBoxFor(model => model.Email, new { @class = "form-control", required = "required" })
+                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "validation-message" })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.FirstName, "First Name", new { @class = "control-label" })
+                    @Html.TextBoxFor(model => model.FirstName, new { @class = "form-control", required = "required" })
+                    @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "validation-message" })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.LastName, "Last Name", new { @class = "control-label" })
+                    @Html.TextBoxFor(model => model.LastName, new { @class = "form-control", required = "required" })
+                    @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "validation-message" })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.AccRole, "Role", new { @class = "control-label" })
+                    @Html.DropDownListFor(model => model.AccRole, new List<SelectListItem>
+                    {
+                        new SelectListItem { Text = "User", Value = "0", Selected = (Model.AccRole == 0) },
+                        new SelectListItem { Text = "Admin", Value = "1", Selected = (Model.AccRole == 1) }
+                    }, new { @class = "form-control", required = "required" })
+                    @Html.ValidationMessageFor(model => model.AccRole, "", new { @class = "validation-message" })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Password, "Password", new { @class = "control-label" })
+                    @Html.PasswordFor(model => model.Password, new { @class = "form-control", required = "required" })
+                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "validation-message" })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.RePassword, "Confirm Password", new { @class = "control-label" })
+                    @Html.PasswordFor(model => model.RePassword, new { @class = "form-control", required = "required" })
+                    @Html.ValidationMessageFor(model => model.RePassword, "", new { @class = "validation-message" })
+                </div>
+                <div class="form-group">
+                    @Html.Label("ImageUpload", "Upload Image", new { @class = "control-label" })
+                    <input type="file" name="ImageUpload" accept="image/*" class="form-control" onchange="previewImage(event)" />
+                    @Html.ValidationMessage("ImageUpload", "", new { @class = "validation-message" })
+                    <div class="image-preview-container" style="text-align: center; margin-top: 10px;">
+                        <img id="imagePreview" src="~/Content/user_profile/@Model.ProfilePath" alt="Image Preview" />
+
+                        <div class="image-name" id="imageName">@Model.ProfilePath</div>
+                        <!-- Hidden field to hold the existing image name -->
+                        <input type="hidden" name="ExistingImgName" value="@Model.ProfilePath" />
+                    </div>
+                </div>
+                <div class="form-group" style="margin-top:10px;">
+                    <button type="submit" class="btn btn-warning btn-block" style=" border: 1px solid #3b3b3b; width: 100%; margin-top: 20px;">
+                        <span class="glyphicon glyphicon-floppy-disk"></span> Update
+                    </button>
+                </div>
+
+            }
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        function previewImage(event) {
+            var input = event.target;
+            var reader = new FileReader();
+            reader.onload = function () {
+                var img = document.getElementById('imagePreview');
+                img.src = reader.result;
+                img.style.display = 'block';
+            }
+            if (input.files && input.files[0]) {
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    </script>
+}
