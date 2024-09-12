@@ -210,6 +210,7 @@
     <Content Include="Views\Dashboard\Stories.cshtml" />
     <Content Include="Views\Home\UpdateUser.cshtml" />
     <Content Include="Views\Blog\Stories.cshtml" />
+    <Content Include="Views\Blog\View.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
