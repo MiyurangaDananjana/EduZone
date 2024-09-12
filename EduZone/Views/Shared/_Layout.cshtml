@@ -32,8 +32,6 @@
             <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
                 <ul class="navbar-nav flex-grow-1">
 
-                    <li>@Html.ActionLink("Blog Home", "About", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-
                     @if (Session["UserId"] == null)
                     {
                         <li>@Html.ActionLink("Login", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
