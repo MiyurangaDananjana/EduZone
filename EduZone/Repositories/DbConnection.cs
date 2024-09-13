@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Data.SqlClient;
 using System.Data;
+using System.Configuration;
 
 namespace EduZone.Repositories
 {
     public class DbConnection
     {
         // Hardcoded connection string
-        private string connectionString = "Data Source=HQ-SDU-PC02\\SQLEXPRESS;Initial Catalog=EduZone;User ID=sa;Password=abc;Encrypt=False";
-
+        //private string connectionString = "Data Source=HQ-SDU-PC02\\SQLEXPRESS;Initial Catalog=EduZone;User ID=sa;Password=abc;Encrypt=False";
+        private string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
 
         public DataTable ExecuteQuery(string sqlQuery, SqlParameter[] parameters = null)
         {
