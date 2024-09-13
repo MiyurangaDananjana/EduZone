@@ -13,7 +13,7 @@
         <div class="container">
             @if (Session["UserId"] == null)
             {
-                @Html.ActionLink("EduZone", "Stories", "Blog", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Hello EduZone", "Stories", "Blog", new { area = "" }, new { @class = "navbar-brand" })
             }
             else if (Session["Role"] != null && Session["Role"].ToString() == "1")
             {
@@ -31,7 +31,7 @@
             </button>
             <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
                 <ul class="navbar-nav flex-grow-1">
-                    <li>@Html.ActionLink("Home", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink(" test Home", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</li>
                     @if (Session["UserId"] == null)
                     {
                         <li>@Html.ActionLink("Login", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
