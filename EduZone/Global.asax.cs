@@ -18,7 +18,5 @@ namespace EduZone
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
-
-      
     }
 }
