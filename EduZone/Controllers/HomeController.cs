@@ -21,6 +21,8 @@ namespace EduZone.Controllers
             return View();
         }
 
+        pouoi iouiou oipuou
+
         [HttpPost]
         public ActionResult Index(LoginModel login)
         {
